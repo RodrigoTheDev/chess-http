@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabuleiro</title>
+</head>
+<body>
+    <div class="tabuleiro">
+        <div class="linha">
+            <div class="coluna" data-pos="a8" onclick="setPos(event)"><span>[a8]</span></div>
+            <div class="coluna" data-pos="b8" onclick="setPos(event)"><span>[b8]</span></div>
+            <div class="coluna" data-pos="c8" onclick="setPos(event)"><span>[c8]</span></div>
+            <div class="coluna" data-pos="d8" onclick="setPos(event)"><span>[d8]</span></div>
+            <div class="coluna" data-pos="e8" onclick="setPos(event)"><span>[e8]</span></div>
+            <div class="coluna" data-pos="f8" onclick="setPos(event)"><span>[f8]</span></div>
+            <div class="coluna" data-pos="g8" onclick="setPos(event)"><span>[g8]</span></div>
+            <div class="coluna" data-pos="h8" onclick="setPos(event)"><span>[h8]</span></div>
+        </div>
+        <div class="linha">
+            <div class="coluna" data-pos="a7" onclick="setPos(event)"><span>[a7]</span></div>
+            <div class="coluna" data-pos="b7" onclick="setPos(event)"><span>[b7]</span></div>
+            <div class="coluna" data-pos="c7" onclick="setPos(event)"><span>[c7]</span></div>
+            <div class="coluna" data-pos="d7" onclick="setPos(event)"><span>[d7]</span></div>
+            <div class="coluna" data-pos="e7" onclick="setPos(event)"><span>[e7]</span></div>
+            <div class="coluna" data-pos="f7" onclick="setPos(event)"><span>[f7]</span></div>
+            <div class="coluna" data-pos="g7" onclick="setPos(event)"><span>[g7]</span></div>
+            <div class="coluna" data-pos="h7" onclick="setPos(event)"><span>[h7]</span></div>
+        </div>
+        <div class="linha">
+            <div class="coluna" data-pos="a6" onclick="setPos(event)"><span>[a6]</span></div>
+            <div class="coluna" data-pos="b6" onclick="setPos(event)"><span>[b6]</span></div>
+            <div class="coluna" data-pos="c6" onclick="setPos(event)"><span>[c6]</span></div>
+            <div class="coluna" data-pos="d6" onclick="setPos(event)"><span>[d6]</span></div>
+            <div class="coluna" data-pos="e6" onclick="setPos(event)"><span>[e6]</span></div>
+            <div class="coluna" data-pos="f6" onclick="setPos(event)"><span>[f6]</span></div>
+            <div class="coluna" data-pos="g6" onclick="setPos(event)"><span>[g6]</span></div>
+            <div class="coluna" data-pos="h6" onclick="setPos(event)"><span>[h6]</span></div>
+        </div>
+        <div class="linha">
+            <div class="coluna" data-pos="a5" onclick="setPos(event)"><span>[a5]</span></div>
+            <div class="coluna" data-pos="b5" onclick="setPos(event)"><span>[b5]</span></div>
+            <div class="coluna" data-pos="c5" onclick="setPos(event)"><span>[c5]</span></div>
+            <div class="coluna" data-pos="d5" onclick="setPos(event)"><span>[d5]</span></div>
+            <div class="coluna" data-pos="e5" onclick="setPos(event)"><span>[e5]</span></div>
+            <div class="coluna" data-pos="f5" onclick="setPos(event)"><span>[f5]</span></div>
+            <div class="coluna" data-pos="g5" onclick="setPos(event)"><span>[g5]</span></div>
+            <div class="coluna" data-pos="h5" onclick="setPos(event)"><span>[h5]</span></div>
+        </div>
+        <div class="linha">
+            <div class="coluna" data-pos="a4" onclick="setPos(event)"><span>[a4]</span></div>
+            <div class="coluna" data-pos="b4" onclick="setPos(event)"><span>[b4]</span></div>
+            <div class="coluna" data-pos="c4" onclick="setPos(event)"><span>[c4]</span></div>
+            <div class="coluna" data-pos="d4" onclick="setPos(event)"><span>[d4]</span></div>
+            <div class="coluna" data-pos="e4" onclick="setPos(event)"><span>[e4]</span></div>
+            <div class="coluna" data-pos="f4" onclick="setPos(event)"><span>[f4]</span></div>
+            <div class="coluna" data-pos="g4" onclick="setPos(event)"><span>[g4]</span></div>
+            <div class="coluna" data-pos="h4" onclick="setPos(event)"><span>[h4]</span></div>
+        </div>
+        <div class="linha">
+            <div class="coluna" data-pos="a3" onclick="setPos(event)"><span>[a3]</span></div>
+            <div class="coluna" data-pos="b3" onclick="setPos(event)"><span>[b3]</span></div>
+            <div class="coluna" data-pos="c3" onclick="setPos(event)"><span>[c3]</span></div>
+            <div class="coluna" data-pos="d3" onclick="setPos(event)"><span>[d3]</span></div>
+            <div class="coluna" data-pos="e3" onclick="setPos(event)"><span>[e3]</span></div>
+            <div class="coluna" data-pos="f3" onclick="setPos(event)"><span>[f3]</span></div>
+            <div class="coluna" data-pos="g3" onclick="setPos(event)"><span>[g3]</span></div>
+            <div class="coluna" data-pos="h3" onclick="setPos(event)"><span>[h3]</span></div>
+        </div>
+        <div class="linha">
+            <div class="coluna" data-pos="a2" onclick="setPos(event)"><span>[a2]</span></div>
+            <div class="coluna" data-pos="b2" onclick="setPos(event)"><span>[b2]</span></div>
+            <div class="coluna" data-pos="c2" onclick="setPos(event)"><span>[c2]</span></div>
+            <div class="coluna" data-pos="d2" onclick="setPos(event)"><span>[d2]</span></div>
+            <div class="coluna" data-pos="e2" onclick="setPos(event)"><span>[e2]</span></div>
+            <div class="coluna" data-pos="f2" onclick="setPos(event)"><span>[f2]</span></div>
+            <div class="coluna" data-pos="g2" onclick="setPos(event)"><span>[g2]</span></div>
+            <div class="coluna" data-pos="h2" onclick="setPos(event)"><span>[h2]</span></div>
+        </div>
+        <div class="linha">
+            <div class="coluna" data-pos="a1" onclick="setPos(event)"><span>[a1]</span></div>
+            <div class="coluna" data-pos="b1" onclick="setPos(event)"><span>[b1]</span></div>
+            <div class="coluna" data-pos="c1" onclick="setPos(event)"><span>[c1]</span></div>
+            <div class="coluna" data-pos="d1" onclick="setPos(event)"><span>[d1]</span></div>
+            <div class="coluna" data-pos="e1" onclick="setPos(event)"><span>[e1]</span></div>
+            <div class="coluna" data-pos="f1" onclick="setPos(event)"><span>[f1]</span></div>
+            <div class="coluna" data-pos="g1" onclick="setPos(event)"><span>[g1]</span></div>
+            <div class="coluna" data-pos="h1" onclick="setPos(event)"><span>[h1]</span></div>
+        </div>
+    </div>
+    <h1 id="pos-result"></h1>
+
+    <button disabled>Testar API (GET)</button>
+    <button onclick="testarPOST()">jogar (post)</button>
+</body>
+</html>
+
+<!-- Testando API xadrez -->
+<script>
+    // Substitua a URL abaixo pela URL da sua API
+    const apiUrl = 'https://sua-api.com/rota';
+    const postUrl = 'http://127.0.0.1:5000/movimento';
+
+    let comando = ''
+
+    // Função para fazer uma requisição GET
+    function testarGET() {
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+        console.log('Dados recebidos:', data);
+        })
+        .catch(error => {
+        console.error('Erro:', error);
+        });
+    }
+
+    // Dados a serem enviados no corpo da requisição POST
+    dadosParaEnviar = {
+        movimento: ''
+    };
+
+    
+    
+    // Função para fazer uma requisição POST
+    function testarPOST() {
+
+        // Configurações para a requisição POST
+        configuracaoPost = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+            // Adicione headers adicionais, se necessário
+        },
+            body: JSON.stringify(dadosParaEnviar)
+        };
+
+    console.log(dadosParaEnviar.movimento)
+    fetch(postUrl, configuracaoPost)
+        .then(response => response.json())
+        .then(data => {
+        console.log('Resposta do servidor:', data);
+        })
+        .catch(error => {
+        console.error('Erro:', error);
+        });
+    }
+
+</script>
+
+<!-- Código para atualizar jogada na tela -->
+<script>
+    const result = document.getElementById('pos-result')
+    let counter = 0
+    let selecionados = []
+
+    function setPos(e) {
+        let pos = null
+        if (counter == 2) {
+            comando = ""
+            counter = 0
+            for(item of selecionados) {
+                item.style.background = "#fff"
+            }
+            selecionados = []
+        }
+        if(e.target.tagName == 'DIV') {
+            pos = e.target
+        } else {
+            pos = e.target.parentNode
+        }
+        selecionados.push(pos)
+        // console.log(selecionados)
+
+        pos.style.background = "#00ff00"
+
+        comando += pos.dataset.pos
+        counter++
+        dadosParaEnviar.movimento = comando
+        
+        result.innerHTML = comando    
+    }
+
+
+</script>
+
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .tabuleiro {
+        display: flex;
+        flex-direction: column;
+    }
+    .linha {
+        display: flex;
+    }
+
+    .coluna {
+        width: 80px;
+        height: 80px;
+        border: 1px solid black;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .coluna:hover {
+        background-color: #00ff00;
+    }
+
+    .coluna * {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+
+</style>
