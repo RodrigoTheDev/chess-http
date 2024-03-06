@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styled.css') }}" media="screen" />
+    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styled.css') }}" media="screen" /> -->
+    <link rel="stylesheet" type="text/css" href="../static/styled.css" media="screen" />
     <title>Xadrez</title>
 </head>
 <body>
@@ -13,8 +14,8 @@
         </div>
 
         <div class="btn__container">
-            <a href="/jogar"><button>Jogar</button></a>
-            <a href="/config"><button>Configurações</button></a>
+            <a href="/templates/jogar.html"><button>Jogar</button></a>
+            <a href="/templates/config.html"><button>Configurações</button></a>
         </div>
     </div>
 </body>
