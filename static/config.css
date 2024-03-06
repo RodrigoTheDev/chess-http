@@ -1,0 +1,61 @@
+body{
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 90vh;
+    background-color: #00477A;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+h1{
+    font-size: 62px;
+    color: #dcf1ff;
+}
+
+.slider__dificult p, .slider__dificult span{
+    font-size: 30px;
+    color: #dcf1ff;
+}
+
+
+/* Estilize o slider e o container */
+.slider-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.slider {
+    width: 100%;
+}
+
+/* Estilize o texto do nível de dificuldade */
+#difficultyLabel {
+    display: block;
+    font-weight: bold;
+    margin-left: 15px;
+}
+
+.slider__dificult{
+    display: flex;
+    align-items: center;
+}
+
+#container__btn{
+    margin-top: 10px;
+}
+
+#container__btn button{
+    width: 200px;
+    height: 50px;
+    font-size: 26px;
+    border: none;
+    border-radius: 10px;
+    background-color: #dcf1ff;
+    color: #00477A;
+}

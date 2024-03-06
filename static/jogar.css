@@ -1,0 +1,38 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #00477A;
+}
+
+.chessboard {
+    border: 2px solid #333;
+    display: inline-block;
+}
+
+.row {
+    display: flex;
+}
+
+.square {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+}
+
+.square img{
+    width: 60px;
+}
+
+.light {
+    background-color: #b2e5ff;
+}
+
+.dark {
+    background-color: #002645;
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='jogar.css') }}">
+    <title>Tabuleiro de Xadrez</title>
+</head>
+<body>
+    <div class="chessboard" id="chessboard"></div>
+
+    <button id="updateButton">Atualizar Tabuleiro</button>
+</body>
+</html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const chessboard = document.getElementById("chessboard");
+        const updateButton = document.getElementById("updateButton");
+    
+        const pieces = [
+            ["r", "n", "b", "q", "k", "b", "n", "r"],
+            ["p", "p", "p", "p", "p", "p", "p", "p"],
+            ["", "", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+            ["P", "P", "P", "P", "P", "P", "P", "P"],
+            ["R", "N", "B", "Q", "K", "B", "N", "R"]
+        ];
+    
+        const pieceImages = {
+            "r": "static/img/torre-preta.png",
+            "n": "static/img/cavalo-preto.png",
+            "b": "static/img/bispo-preto.png",
+            "q": "static/img/rainha-preta.png",
+            "k": "static/img/rei-preto.png",
+            "p": "static/img/peao-preto.png",
+            "R": "static/img/torre-branca.png",
+            "N": "static/img/cavalo-branco.png",
+            "B": "static/img/bispo-branco.png",
+            "Q": "static/img/rainha-branca.png",
+            "K": "static/img/rei-branco.png",
+            "P": "static/img/peao-branco.png",
+        };
+    
+        function createChessboard(pieces) {
+            let html = '';
+            for (let i = 0; i < 8; i++) {
+                html += '<div class="row">';
+                for (let j = 0; j < 8; j++) {
+                    const squareColor = (i + j) % 2 === 0 ? 'light' : 'dark';
+                    const piece = pieces[i][j] ? `<img src="${pieceImages[pieces[i][j]]}" alt="piece">` : '';
+                    html += `<div class="square ${squareColor}">${piece}</div>`;
+                }
+                html += '</div>';
+            }
+            chessboard.innerHTML = html;
+        }
+    
+        createChessboard(pieces);
+
+        updateButton.addEventListener("click", function() {
+            const newPieces = [
+            ["r", "n", "b", "q", "k", "b", "n", "r"],
+            ["p", "p", "p", "p", "p", "p", "p", "p"],
+            ["", "", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+            ["", "", "", "", "", "", "", ""],
+            ["", "", "P", "", "", "", "", ""],
+            ["P", "P", "", "P", "P", "P", "P", "P"],
+            ["R", "N", "B", "Q", "K", "B", "N", "R"]
+            ];
+    
+            createChessboard(newPieces);
+    });
+    
+});
+    
+</script>

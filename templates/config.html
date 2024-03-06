@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='config.css') }}" media="screen" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='slider.css') }}" media="screen" />
+    <title>Configurações</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Configurações</h1>
+        <div class="slider-container">
+            <div class="slider__dificult">
+                <p>Dificuldade: </p>
+                <span id="difficultyLabel">Iniciante</span>
+            </div>
+            <input type="range" min="0" max="3" value="0" class="slider" id="myRange">
+            <div id="container__btn">
+                <button>Enviar</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var slider = document.getElementById("myRange");
+    var output = document.getElementById("difficultyLabel");
+    const difficultyLevels = ["Iniciante", "Fácil", "Médio", "Difícil"];
+    
+    slider.addEventListener("input", function() {
+        const difficultyValue = parseInt(slider.value);
+        output.textContent = difficultyLevels[difficultyValue];
+    });
+});    
+</script>
