@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='jogar.css') }}">
+    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='jogar.css') }}"> -->
+    <link rel="stylesheet" type="text/css" href="../static/jogar.css">
     <title>Tabuleiro de Xadrez</title>
 </head>
 <body>
@@ -30,18 +31,18 @@
         ];
     
         const pieceImages = {
-            "r": "static/img/torre-preta.png",
-            "n": "static/img/cavalo-preto.png",
-            "b": "static/img/bispo-preto.png",
-            "q": "static/img/rainha-preta.png",
-            "k": "static/img/rei-preto.png",
-            "p": "static/img/peao-preto.png",
-            "R": "static/img/torre-branca.png",
-            "N": "static/img/cavalo-branco.png",
-            "B": "static/img/bispo-branco.png",
-            "Q": "static/img/rainha-branca.png",
-            "K": "static/img/rei-branco.png",
-            "P": "static/img/peao-branco.png",
+            "r": "../static/img/torre-preta.png",
+            "n": "../static/img/cavalo-preto.png",
+            "b": "../static/img/bispo-preto.png",
+            "q": "../static/img/rainha-preta.png",
+            "k": "../static/img/rei-preto.png",
+            "p": "../static/img/peao-preto.png",
+            "R": "../static/img/torre-branca.png",
+            "N": "../static/img/cavalo-branco.png",
+            "B": "../static/img/bispo-branco.png",
+            "Q": "../static/img/rainha-branca.png",
+            "K": "../static/img/rei-branco.png",
+            "P": "../static/img/peao-branco.png",
         };
     
         function createChessboard(pieces) {
