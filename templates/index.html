@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styled.css') }}" media="screen" /> -->
     <link rel="stylesheet" type="text/css" href="../static/styled.css" media="screen" />
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Xadrez</title>
 </head>
 <body>
@@ -14,9 +17,28 @@
         </div>
 
         <div class="btn__container">
-            <a href="/templates/jogar.html"><button>Jogar</button></a>
-            <a href="/templates/config.html"><button>Configurações</button></a>
+            <a href="/jogar"><button>Jogar</button></a>
+            <a href="config"><button>Configurações</button></a>
         </div>
     </div>
 </body>
 </html>
+
+<script>
+    Swal.fire({
+        title: "Instruções",
+        text: "Para setar uma dificuldade, clique no botão configurações, caso prefira uma dificuldade aleatoria clique em jogar",
+        icon: "warning",
+        showDenyButton: true,
+        confirmButtonColor: "#002645",
+        denyButtonColor: "#00A2FF",
+        confirmButtonText: "Confirmar",
+        denyButtonText: `Configurações`
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = 'http://127.0.0.1:5000/jogar?df=true';
+        } else if (result.isDenied) {
+            window.location.href = 'http://127.0.0.1:5000/config'
+        }
+      });;
+</script>
