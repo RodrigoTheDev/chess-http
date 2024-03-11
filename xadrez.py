@@ -1,5 +1,6 @@
 from flask import Flask, render_template, session, request, redirect, url_for
 import random
+import json
 
 app = Flask(__name__)
 app.secret_key = 'sua_chave_secreta'
@@ -30,9 +31,25 @@ def jogar():
         dificuldade = numero_aleatorio
     else:
         dificuldade = session.get('dificuldade', None)
-    
         
     return render_template('jogar.html', dificuldade=dificuldade)
+
+@app.route('/update_board', methods=['POST'])
+def update_board():
+    newPieces = [
+        ["r", "n", "b", "q", "k", "b", "n", "r"],
+        ["p", "p", "p", "p", "p", "p", "p", "p"],
+        ["", "", "", "", "", "", "", ""],
+        ["", "", "", "", "", "", "", ""],
+        ["", "", "", "", "", "", "", ""],
+        ["", "", "P", "", "", "", "", ""],
+        ["P", "P", "", "P", "P", "P", "P", "P"],
+        ["R", "N", "B", "Q", "K", "B", "N", "R"]
+    ]
+
+    new_pieces_json = json.dumps(newPieces)
+        
+    return new_pieces_json
 
 if __name__ == '__main__':
     app.run(debug=True)

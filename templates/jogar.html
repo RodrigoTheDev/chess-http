@@ -9,14 +9,14 @@
 <body>
     <div class="chessboard" id="chessboard"></div>
 
-    <button id="updateButton">Atualizar Tabuleiro</button>
+    <!-- <button id="updateButton">Atualizar Tabuleiro</button> -->
 </body>
 </html>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const chessboard = document.getElementById("chessboard");
-        const updateButton = document.getElementById("updateButton");
+        /*const updateButton = document.getElementById("updateButton"); */
     
         const pieces = [
             ["r", "n", "b", "q", "k", "b", "n", "r"],
@@ -58,23 +58,27 @@
             chessboard.innerHTML = html;
         }
     
-        createChessboard(pieces);
-
-        updateButton.addEventListener("click", function() {
-            const newPieces = [
-            ["r", "n", "b", "q", "k", "b", "n", "r"],
-            ["p", "p", "p", "p", "p", "p", "p", "p"],
-            ["", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", ""],
-            ["", "", "", "", "", "", "", ""],
-            ["", "", "P", "", "", "", "", ""],
-            ["P", "P", "", "P", "P", "P", "P", "P"],
-            ["R", "N", "B", "Q", "K", "B", "N", "R"]
-            ];
-    
-            createChessboard(newPieces);
+        function updateBoardRequest() {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "/update_board", true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        const newPieces = JSON.parse(xhr.responseText);
+                        createChessboard(newPieces);
+                    } else {
+                        console.error("Erro ao atualizar tabuleiro:", xhr.statusText);
+                    }
+                }
+            };
+            
+            xhr.send();
+            
+        }
+        updateBoardRequest();
     });
-    
-});
+
     
 </script>
