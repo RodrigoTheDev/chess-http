@@ -8,9 +8,7 @@ import moveValidation
 import random
 import json
 
-
-
-stockfish_path = "./stockfishEngine/stockfish-windows-x86-64-avx2.exe"  # Substitua pelo caminho real
+stockfish_path = "stockfish-windows-x86-64-avx2\stockfish\stockfish-windows-x86-64-avx2.exe"  # Substitua pelo caminho real
 board = chess.Board()
 engine = chess.engine.SimpleEngine.popen_uci(stockfish_path)
 move_event = threading.Event()
@@ -59,6 +57,26 @@ thread.start()
 def index():  
     return render_template('index.html')
 
+@app.route('/restart_game')
+def restart_game():
+    global board
+    board = chess.Board()
+    
+    df = request.args.get('df')
+    
+    if df == 'true':    
+        numeros = [0, 1, 2, 3]  
+        pesos = [1, 2, 5, 7]  
+        random.seed()   
+        numero_aleatorio = random.choices(numeros, weights=pesos, k=1)[0]
+        
+        session['dificuldade'] = numero_aleatorio
+        dificuldade = numero_aleatorio
+    else:
+        dificuldade = session.get('dificuldade', None)
+    
+    return redirect(url_for('jogar', dificuldade=dificuldade))
+
 @app.route('/config', methods=['GET', 'POST'])
 def config():
     if request.method == 'POST':
@@ -81,8 +99,25 @@ def jogar():
         dificuldade = numero_aleatorio
     else:
         dificuldade = session.get('dificuldade', None)
+    
+    # if dificuldade == 0:    #Iniciante
+    #     nivel = 1
+    # elif dificuldade == 1:  #Facil
+    #     nivel = 10
+    # elif dificuldade == 2:  #Medio
+    #     nivel = 15
+    # elif dificuldade == 3:  #Dificil
+    #     nivel = 20
+        
+  
+    #     options = {"Skill Level": nivel}  
+    #     engine.configure(options)
+        
+    #     global board
+    #     board = chess.Board()   
         
     return render_template('jogar.html', dificuldade=dificuldade)
+
 
 def boardToList(board):
     rowList = []
@@ -115,7 +150,6 @@ def boardToList(board):
         if linha == None:
             rowList.append('')
             
-        
         if len(rowList) == 8:
             finalList.append(rowList)
             
@@ -126,37 +160,15 @@ def boardToList(board):
 
 @app.route('/update_board', methods=['POST'])
 def update_board():
-    # print(board)
     # Obter o mapa de peças
     piece_map = board.piece_map()
 
-
     # Criar uma lista representando o tabuleiro
     board_list = [piece_map.get(square, None) for square in chess.SQUARES]
-    
-    newPieces = [
-        ["r", "n", "b", "q", "k", "b", "n", "r"],
-        ["p", "p", "p", "p", "p", "p", "p", "p"],
-        ["",  "",  "",  "",  "",  "",  "",  ""],
-        ["",  "",  "",  "",  "",  "",  "",  ""],
-        ["",  "",  "",  "",  "",  "",  "",  ""],
-        ["",  "",  "",  "",  "",  "",  "",  ""],
-        ["P", "P", "P", "P", "P", "P", "P", "P"],
-        ["R", "N", "B", "Q", "K", "B", "N", "R"]
-    ]
 
-    # print('PRÉ DEFINIDO:')
-    # print(newPieces)
-    # print('GERADO PELA FUNÇÃO:')
-    # print(boardToList(board_list))
-
-    
-    
     new_pieces_json = json.dumps(boardToList(board_list))
         
     return new_pieces_json
-
-
 
 def iniciar_servidor():
     # Iniciar o servidor Flask

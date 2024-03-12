@@ -21,7 +21,7 @@
         </div>
 
         <div class="btn__container">
-            <a href="/jogar"><button>Jogar</button></a>
+            <a href="/restart_game"><button>Jogar</button></a>
             <a href="config"><button>Configurações</button></a>
         </div>
     </div>
@@ -43,7 +43,7 @@
         showCloseButton: true
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = 'http://127.0.0.1:5000/jogar?df=true';
+            window.location.href = 'http://127.0.0.1:5000/restart_game?df=true';
         } else if (result.isDenied) {
             window.location.href = 'http://127.0.0.1:5000/config'
         }
