@@ -15,6 +15,7 @@ board = chess.Board()
 engine = chess.engine.SimpleEngine.popen_uci(stockfish_path)
 move_event = threading.Event()
 app = Flask(__name__)
+app.secret_key = 'sua_chave_secreta'
 
 # CORS
 # A LINHA ABAIXO HABILITA O ACESSO DA ROTA PARA TODOS NA REDE, DESCOMENTE POR SUA PRÓPRIA CONTA E RISCO
