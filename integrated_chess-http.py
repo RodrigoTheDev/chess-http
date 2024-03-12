@@ -48,6 +48,17 @@ def aguardar_movimento():
             print(move_uci)
             board.push_uci(move_uci)
             move_event.set()  # Movimento feito pelo robô
+            
+        if board.is_checkmate():
+            session['origem_xeque'] = 'robo'
+            session['xeque'] = True
+            
+        if board.turn == chess.WHITE and board.is_checkmate():
+            session['origem_xeque'] = 'jogador'
+            session['xeque'] = True
+            
+        # if board.is_check():              #Colocar uma logica para fazer um som falando xeque
+        #     session['xeque'] = 'Xeque!'
 
 # Iniciar a thread para aguardar movimentos
 thread = threading.Thread(target=aguardar_movimento)
@@ -61,21 +72,9 @@ def index():
 def restart_game():
     global board
     board = chess.Board()
+    session['xeque'] = False
     
-    df = request.args.get('df')
-    
-    if df == 'true':    
-        numeros = [0, 1, 2, 3]  
-        pesos = [1, 2, 5, 7]  
-        random.seed()   
-        numero_aleatorio = random.choices(numeros, weights=pesos, k=1)[0]
-        
-        session['dificuldade'] = numero_aleatorio
-        dificuldade = numero_aleatorio
-    else:
-        dificuldade = session.get('dificuldade', None)
-    
-    return redirect(url_for('jogar', dificuldade=dificuldade))
+    return redirect(url_for('jogar'))
 
 @app.route('/config', methods=['GET', 'POST'])
 def config():
@@ -88,6 +87,17 @@ def config():
 @app.route('/jogar')
 def jogar():
     df = request.args.get('df')
+    xeque = session.get('xeque')
+    
+    # Lógica para determinar a origem do xeque
+    origem_xeque = session.get('origem_xeque')
+    
+    if origem_xeque == 'robo':
+        origem_xeque = 'Xeque Robo'
+    elif origem_xeque == 'jogador':
+        origem_xeque = 'Xeque Jogador'
+        
+    session['origem_xeque'] = None
     
     if df == 'true':    
         numeros = [0, 1, 2, 3]  
@@ -99,24 +109,8 @@ def jogar():
         dificuldade = numero_aleatorio
     else:
         dificuldade = session.get('dificuldade', None)
-    
-    # if dificuldade == 0:    #Iniciante
-    #     nivel = 1
-    # elif dificuldade == 1:  #Facil
-    #     nivel = 10
-    # elif dificuldade == 2:  #Medio
-    #     nivel = 15
-    # elif dificuldade == 3:  #Dificil
-    #     nivel = 20
         
-  
-    #     options = {"Skill Level": nivel}  
-    #     engine.configure(options)
-        
-    #     global board
-    #     board = chess.Board()   
-        
-    return render_template('jogar.html', dificuldade=dificuldade)
+    return render_template('jogar.html', dificuldade=dificuldade, xeque=xeque, origem_xeque=origem_xeque)
 
 
 def boardToList(board):

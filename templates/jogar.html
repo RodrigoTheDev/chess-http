@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='jogar.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Tabuleiro de Xadrez</title>
 </head>
 <body>
@@ -59,11 +61,50 @@
                     }
                 }
             };
-            
             xhr.send();
-            
         }
         updateBoardRequest();
+
+        var xequeEstado = "{{ xeque }}";
+        var xequeOrigem = "{{ origem_xeque }}";
+
+        if( xequeEstado == true ){
+            if( xequeOrigem == 'Xeque Robo' ){
+                Swal.fire({
+                    title: "Xeque Mate",
+                    text: "Você perdeu, Lixo, Para reiniciar clique em Confirmar",
+                    icon: "warning",
+                    iconColor: "#005795",
+                    showDenyButton: false,
+                    confirmButtonColor: "#002645",
+                    denyButtonColor: "#00A2FF",
+                    confirmButtonText: "Confirmar",
+                    allowOutsideClick: false,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = 'http://127.0.0.1:5000/restart_game?df=true';
+                    }
+                })
+
+            }else{
+                Swal.fire({
+                    title: "Xeque Mate",
+                    text: "Parabens você conseguiu um proeza jamais visto!!",
+                    icon: "success",
+                    /*iconColor: "#005795",*/
+                    showDenyButton: false,
+                    confirmButtonColor: "#002645",
+                    denyButtonColor: "#00A2FF",
+                    confirmButtonText: "Reiniciar",
+                    allowOutsideClick: false,
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = 'http://127.0.0.1:5000/restart_game?df=true';
+                    }
+                })
+
+            }
+        }
     });
 
     
