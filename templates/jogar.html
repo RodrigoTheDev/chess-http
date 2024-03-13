@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta http-equiv="refresh" content="5"> -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='jogar.css') }}">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -63,7 +64,9 @@
             };
             xhr.send();
         }
-        updateBoardRequest();
+
+        setInterval(updateBoardRequest, 5000);
+        
 
         var xequeEstado = "{{ xeque }}";
         var xequeOrigem = "{{ origem_xeque }}";
