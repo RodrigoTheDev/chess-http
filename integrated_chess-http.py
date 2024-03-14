@@ -8,7 +8,7 @@ import moveValidation
 import random
 import json
 
-stockfish_path = "stockfish-windows-x86-64-avx2\stockfish\stockfish-windows-x86-64-avx2.exe"  # Substitua pelo caminho real
+stockfish_path = "stockfish\stockfish-windows-x86-64-avx2.exe"  # Substitua pelo caminho real
 board = chess.Board()
 engine = chess.engine.SimpleEngine.popen_uci(stockfish_path)
 move_event = threading.Event()
@@ -50,13 +50,14 @@ def aguardar_movimento():
             board.push_uci(move_uci)
             move_event.set()  # Movimento feito pelo robô
             
-        # if board.is_checkmate():
-            # session['origem_xeque'] = 'robo'
-            # session['xeque'] = True
+        if board.is_checkmate():
+            session['origem_xeque'] = 'robo'
+            session['xeque'] = True
             
-        # if board.turn == chess.WHITE and board.is_checkmate():
-        #     session['origem_xeque'] = 'jogador'
-        #     session['xeque'] = True
+        session['xeque'] = True
+        if board.turn == chess.WHITE and board.is_checkmate():
+            session['origem_xeque'] = 'jogador'
+            session['xeque'] = True
 
 # Iniciar a thread para aguardar movimentos
 thread = threading.Thread(target=aguardar_movimento)

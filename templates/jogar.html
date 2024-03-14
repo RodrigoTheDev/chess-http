@@ -71,7 +71,7 @@
         var xequeOrigem = "{{ origem_xeque }}";
 
         if( xequeEstado == true ){
-            //if( xequeOrigem == 'Xeque Robo' ){
+            if( xequeOrigem == 'Xeque Robo' ){
                 Swal.fire({
                     title: "Xeque Mate",
                     text: "Você perdeu, Lixo, Para reiniciar clique em Confirmar",
@@ -88,10 +88,10 @@
                     }
                 })
 
-            /*}else{
+            }else{
                 Swal.fire({
                     title: "Xeque Mate",
-                    text: "Parabens você conseguiu um proeza jamais visto!!",
+                    text: "Parabens você conseguiu um proeza jamais vista!!",
                     icon: "success",
                     showDenyButton: false,
                     confirmButtonColor: "#002645",
@@ -104,7 +104,7 @@
                     }
                 })
 
-            }*/
+            }
         }
     });
 
