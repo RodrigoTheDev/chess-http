@@ -12,6 +12,7 @@ stockfish_path = "stockfish-windows-x86-64-avx2\stockfish\stockfish-windows-x86-
 board = chess.Board()
 engine = chess.engine.SimpleEngine.popen_uci(stockfish_path)
 move_event = threading.Event()
+
 app = Flask(__name__)
 app.secret_key = 'sua_chave_secreta'
 
@@ -40,25 +41,22 @@ def aguardar_movimento():
         move_event.wait()  # Aguardando sinal
         move_event.clear()  # Limpando sinal para próxima espera
         print("Tabuleiro atualizado:\n", board)
-
+        
         if board.turn == chess.BLACK and not board.is_game_over():
-            result = engine.play(board, chess.engine.Limit(time=2.0))
+            result = engine.play(board, chess.engine.Limit(time=5.0))
             move_uci = result.move.uci()
             print("Jogada do robô:")
             print(move_uci)
             board.push_uci(move_uci)
             move_event.set()  # Movimento feito pelo robô
             
-        if board.is_checkmate():
-            session['origem_xeque'] = 'robo'
-            session['xeque'] = True
+        # if board.is_checkmate():
+            # session['origem_xeque'] = 'robo'
+            # session['xeque'] = True
             
-        if board.turn == chess.WHITE and board.is_checkmate():
-            session['origem_xeque'] = 'jogador'
-            session['xeque'] = True
-            
-        # if board.is_check():              #Colocar uma logica para fazer um som falando xeque
-        #     session['xeque'] = 'Xeque!'
+        # if board.turn == chess.WHITE and board.is_checkmate():
+        #     session['origem_xeque'] = 'jogador'
+        #     session['xeque'] = True
 
 # Iniciar a thread para aguardar movimentos
 thread = threading.Thread(target=aguardar_movimento)
