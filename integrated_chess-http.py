@@ -2,13 +2,14 @@ import chess
 import chess.engine
 from chess import Piece
 from flask import Flask, render_template, session, request, redirect, url_for, jsonify
+
 from flask_cors import CORS
 import threading
 import moveValidation
 import random
 import json
 
-stockfish_path = "stockfish-windows-x86-64-avx2\stockfish\stockfish-windows-x86-64-avx2.exe"  # Substitua pelo caminho real
+stockfish_path = "stockfishEngine\stockfish-windows-x86-64-avx2.exe"  # Substitua pelo caminho real
 board = chess.Board()
 engine = chess.engine.SimpleEngine.popen_uci(stockfish_path)
 move_event = threading.Event()
@@ -16,9 +17,14 @@ move_event = threading.Event()
 app = Flask(__name__)
 app.secret_key = 'sua_chave_secreta'
 
+# Variáveis de game
+_DEBUG = ''
+
 # CORS
 # A LINHA ABAIXO HABILITA O ACESSO DA ROTA PARA TODOS NA REDE, DESCOMENTE POR SUA PRÓPRIA CONTA E RISCO
-CORS(app, resources={r"/movimento": {"origins": "*"}})
+CORS(app, resources={r"/*": {"origins": "*"}})
+
+
 
 @app.route('/movimento', methods=['POST'])
 def receber_movimento():
@@ -35,8 +41,12 @@ def receber_movimento():
             return jsonify({"erro": f"O movimento {move_uci} não é válido."})
     except KeyError:
         return jsonify({"erro": "Formato de requisição inválido."})
+    
+    
 
 def aguardar_movimento():
+    global _DEBUG
+
     while not board.is_game_over():
         move_event.wait()  # Aguardando sinal
         move_event.clear()  # Limpando sinal para próxima espera
@@ -49,14 +59,14 @@ def aguardar_movimento():
             print(move_uci)
             board.push_uci(move_uci)
             move_event.set()  # Movimento feito pelo robô
+
             
-        # if board.is_checkmate():
-            # session['origem_xeque'] = 'robo'
-            # session['xeque'] = True
+        if board.is_checkmate():
+            _DEBUG = 'robo'
             
-        # if board.turn == chess.WHITE and board.is_checkmate():
-        #     session['origem_xeque'] = 'jogador'
-        #     session['xeque'] = True
+        if board.turn == chess.WHITE and board.is_checkmate():
+            _DEBUG = 'human'
+            
 
 # Iniciar a thread para aguardar movimentos
 thread = threading.Thread(target=aguardar_movimento)
@@ -108,7 +118,7 @@ def jogar():
     else:
         dificuldade = session.get('dificuldade', None)
         
-    return render_template('jogar.html', dificuldade=dificuldade, xeque=xeque, origem_xeque=origem_xeque)
+    return render_template('jogar.html', dificuldade=dificuldade, xeque=xeque, origem_xeque=origem_xeque, _DEBUG=_DEBUG, )
 
 
 def boardToList(board):
@@ -152,6 +162,9 @@ def boardToList(board):
 
 @app.route('/update_board', methods=['POST'])
 def update_board():
+    global _DEBUG
+    print(_DEBUG)
+
     # Obter o mapa de peças
     piece_map = board.piece_map()
 

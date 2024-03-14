@@ -6,6 +6,7 @@
     <!-- <meta http-equiv="refresh" content="5"> -->
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='jogar.css') }}">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Tabuleiro de Xadrez</title>
 </head>
@@ -65,13 +66,14 @@
             xhr.send();
         }
 
-        setInterval(updateBoardRequest, 5000);
+        updateBoardRequest()
+        // setInterval(updateBoardRequest, 5000);
         
-        var xequeEstado = "{{ xeque }}";
-        var xequeOrigem = "{{ origem_xeque }}";
+        var xequeEstado = "{{ _DEBUG }}";
 
-        if( xequeEstado == true ){
-            //if( xequeOrigem == 'Xeque Robo' ){
+        console.log(xequeEstado);
+
+        if( xequeEstado == 'robo' ){
                 Swal.fire({
                     title: "Xeque Mate",
                     text: "Você perdeu, Lixo, Para reiniciar clique em Confirmar",
@@ -88,23 +90,21 @@
                     }
                 })
 
-            /*}else{
-                Swal.fire({
-                    title: "Xeque Mate",
-                    text: "Parabens você conseguiu um proeza jamais visto!!",
-                    icon: "success",
-                    showDenyButton: false,
-                    confirmButtonColor: "#002645",
-                    denyButtonColor: "#00A2FF",
-                    confirmButtonText: "Reiniciar",
-                    allowOutsideClick: false,
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = 'http://127.0.0.1:5000/restart_game?df=true';
-                    }
-                })
-
-            }*/
+        }else if(xequeEstado == 'human'){
+            Swal.fire({
+                title: "Xeque Mate",
+                text: "Parabens você conseguiu uma proeza jamais vista!!",
+                icon: "success",
+                showDenyButton: false,
+                confirmButtonColor: "#002645",
+                denyButtonColor: "#00A2FF",
+                confirmButtonText: "Reiniciar",
+                allowOutsideClick: false,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'http://127.0.0.1:5000/restart_game?df=true';
+                }
+            })
         }
     });
 
