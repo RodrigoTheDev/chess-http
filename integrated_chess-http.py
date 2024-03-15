@@ -20,6 +20,15 @@ app.secret_key = 'sua_chave_secreta'
 # Variáveis de game
 _DEBUG = ''
 
+
+#Funções do STOCKFISH
+def configure_stockfish(difficulty):
+    # Configure Stockfish with specific difficulty level
+    engine = chess.engine.SimpleEngine.popen_uci("stockfishEngine\stockfish-windows-x86-64-avx2.exe")
+    engine.configure({"Skill Level": difficulty})
+    engine.configure({"UCI_LimitStrength": True})
+    return engine
+
 # CORS
 # A LINHA ABAIXO HABILITA O ACESSO DA ROTA PARA TODOS NA REDE, DESCOMENTE POR SUA PRÓPRIA CONTA E RISCO
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -62,10 +71,10 @@ def aguardar_movimento():
 
             
         if board.is_checkmate():
-            _DEBUG = 'robo'
+            _DEBUG = 'human'
             
         if board.turn == chess.WHITE and board.is_checkmate():
-            _DEBUG = 'human'
+            _DEBUG = 'robo'
             
 
 # Iniciar a thread para aguardar movimentos
@@ -73,7 +82,9 @@ thread = threading.Thread(target=aguardar_movimento)
 thread.start()
 
 @app.route('/')
-def index():  
+def index(): 
+    global _DEBUG
+    _DEBUG = ''
     return render_template('index.html')
 
 @app.route('/restart_game')
@@ -88,6 +99,15 @@ def restart_game():
 def config():
     if request.method == 'POST':
         session['dificuldade'] = int(request.form['dificuldade'])
+        print(session['dificuldade'])
+        if session['dificuldade'] == 0:
+            configure_stockfish(1)
+        if session['dificuldade'] == 1:
+            configure_stockfish(5)
+        if session['dificuldade'] == 2:
+            configure_stockfish(14)
+        if session['dificuldade'] == 3:
+            configure_stockfish(20)
         return redirect(url_for('jogar'))
     else:
         return render_template('config.html')
@@ -97,28 +117,17 @@ def jogar():
     df = request.args.get('df')
     xeque = session.get('xeque')
     
-    # Lógica para determinar a origem do xeque
-    origem_xeque = session.get('origem_xeque')
-    
-    if origem_xeque == 'robo':
-        origem_xeque = 'Xeque Robo'
-    elif origem_xeque == 'jogador':
-        origem_xeque = 'Xeque Jogador'
-        
-    session['origem_xeque'] = None
-    
     if df == 'true':    
-        numeros = [0, 1, 2, 3]  
+        numeros = [1, 5, 14, 20]  
         pesos = [1, 2, 5, 7]  
         random.seed()   
         numero_aleatorio = random.choices(numeros, weights=pesos, k=1)[0]
         
-        session['dificuldade'] = numero_aleatorio
-        dificuldade = numero_aleatorio
+        configure_stockfish(numero_aleatorio)
     else:
         dificuldade = session.get('dificuldade', None)
         
-    return render_template('jogar.html', dificuldade=dificuldade, xeque=xeque, origem_xeque=origem_xeque, _DEBUG=_DEBUG, )
+    return render_template('jogar.html', dificuldade=dificuldade, xeque=xeque, _DEBUG=_DEBUG, )
 
 
 def boardToList(board):
