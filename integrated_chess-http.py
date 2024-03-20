@@ -123,7 +123,7 @@ def config():
         session['dificuldade'] = int(request.form['dificuldade'])
         if session['dificuldade'] in range(4):
             configure_stockfish(session['dificuldade'] * 5 + 1)  # Configuração de dificuldade
-        return redirect(url_for('jogar'))
+        return redirect(url_for('restart_game'))
     else:
         return render_template('config.html')
 
@@ -133,7 +133,7 @@ def jogar():
     Rota para iniciar o jogo.
     """
     global engine
-    engine = configure_stockfish(1)  # Configuração padrão
+    engine = configure_stockfish(20)  # Configuração padrão
     df = request.args.get('df')
     xeque = session.get('xeque')
     
