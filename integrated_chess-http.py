@@ -37,6 +37,10 @@ def configure_stockfish(difficulty):
     engine = chess.engine.SimpleEngine.popen_uci(stockfish_path)
     engine.configure({"Skill Level": difficulty})
     engine.configure({"UCI_LimitStrength": False})
+    engine.configure({"UCI_Elo": 3190})
+    engine.configure({"Threads": 4})
+    engine.configure({"Hash": 512})
+      
     return engine
 
 # CORS
@@ -83,11 +87,14 @@ def aguardar_movimento():
             board.push_uci(move_uci)
             move_event.set()  # Movimento feito pelo robô
 
-        if board.is_checkmate():
+        if board.turn == chess.BLACK and board.is_checkmate():
             _DEBUG = 'human'
+            print(_DEBUG)
             
         if board.turn == chess.WHITE and board.is_checkmate():
             _DEBUG = 'robo'
+            print(_DEBUG)
+            
             
 
 # Iniciar a thread para aguardar movimentos
@@ -146,9 +153,9 @@ def jogar():
         configure_stockfish(numero_aleatorio)
     else:
         dificuldade = session.get('dificuldade', None)
+        configure_stockfish(dificuldade)
         
-    return render_template('jogar.html', dificuldade=dificuldade, xeque=xeque, _DEBUG=_DEBUG, )
-
+    return render_template('jogar.html', xeque=xeque, _DEBUG=_DEBUG)
 
 def boardToList(board):
     """
