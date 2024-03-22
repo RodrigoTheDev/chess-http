@@ -18,6 +18,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const chessboard = document.getElementById("chessboard");
+        let parada = false;
     
         const pieceImages = {
             "r": "static/img/torre-preta.png",
@@ -65,47 +66,51 @@
             };
             xhr.send();
 
-            var xequeEstado = "{{ _DEBUG }}";
-
-            console.log(xequeEstado);
-
-            if( xequeEstado == 'robo' ){
-                    Swal.fire({
-                        title: "Xeque Mate",
-                        text: "Você perdeu, Lixo, Para reiniciar clique em Confirmar",
-                        icon: "warning",
-                        iconColor: "#005795",
-                        showDenyButton: false,
-                        confirmButtonColor: "#002645",
-                        denyButtonColor: "#00A2FF",
-                        confirmButtonText: "Confirmar",
-                        allowOutsideClick: false,
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = 'http://127.0.0.1:5000/';
-                        }
-                    })
-
-            }else if(xequeEstado == 'human'){
-                Swal.fire({
-                    title: "Xeque Mate",
-                    text: "Parabens você conseguiu uma proeza jamais vista!!",
-                    icon: "success",
-                    showDenyButton: false,
-                    confirmButtonColor: "#002645",
-                    denyButtonColor: "#00A2FF",
-                    confirmButtonText: "Reiniciar",
-                    allowOutsideClick: false,
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = 'http://127.0.0.1:5000/restart_game?df=true';
+            const debugXHR = new XMLHttpRequest();
+            debugXHR.open("GET", "/debug_value", true);
+            debugXHR.onreadystatechange = function () {
+                if (debugXHR.readyState === XMLHttpRequest.DONE && debugXHR.status === 200) {
+                    const xequeEstado = debugXHR.responseText;
+                    console.log(xequeEstado);
+                    
+                    if (xequeEstado === 'robo') {
+                        Swal.fire({
+                            title: "Xeque Mate",
+                            text: "Você perdeu, Lixo, Para reiniciar clique em Confirmar",
+                            icon: "warning",
+                            iconColor: "#005795",
+                            showDenyButton: false,
+                            confirmButtonColor: "#002645",
+                            denyButtonColor: "#00A2FF",
+                            confirmButtonText: "Confirmar",
+                            allowOutsideClick: false,
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = 'http://127.0.0.1:5000/';
+                            }
+                            clearInterval(parada);
+                        })
+                    } else if (xequeEstado === 'human') {
+                        Swal.fire({
+                            title: "Xeque Mate",
+                            text: "Parabens você conseguiu uma proeza jamais vista!!",
+                            icon: "success",
+                            showDenyButton: false,
+                            confirmButtonColor: "#002645",
+                            denyButtonColor: "#00A2FF",
+                            confirmButtonText: "Reiniciar",
+                            allowOutsideClick: false,
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = 'http://127.0.0.1:5000/restart_game?df=true';
+                            }
+                        })
                     }
-                })
-            }
+                }
+            };
+            debugXHR.send();
         }
-
-        // updateBoardRequest()
-        setInterval(updateBoardRequest, 500);
+        parada = setInterval(updateBoardRequest, 1000);
     });
 
     

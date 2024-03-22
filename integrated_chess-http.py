@@ -10,7 +10,7 @@ import moveValidation
 import random
 import json
 
-stockfish_path = "stockfish\stockfish-windows-x86-64-avx2.exe"  # Substitua pelo caminho real
+stockfish_path = "stockfish-windows-x86-64-avx2\stockfish\stockfish-windows-x86-64-avx2.exe"  # Substitua pelo caminho real
 board = chess.Board()
 engine = None
 move_event = threading.Event()
@@ -46,6 +46,15 @@ def configure_stockfish(difficulty):
 # CORS
 # A LINHA ABAIXO HABILITA O ACESSO DA ROTA PARA TODOS NA REDE, DESCOMENTE POR SUA PRÓPRIA CONTA E RISCO
 CORS(app, resources={r"/*": {"origins": "*"}})
+
+@app.route('/debug_value', methods=['GET'])
+def debug_value():
+    """
+    Rota para fornecer o valor mais recente de _DEBUG.
+    """
+    global _DEBUG
+    return _DEBUG
+
 
 @app.route('/movimento', methods=['POST'])
 def receber_movimento():
@@ -89,11 +98,9 @@ def aguardar_movimento():
 
         if board.turn == chess.BLACK and board.is_checkmate():
             _DEBUG = 'human'
-            print(_DEBUG)
             
         if board.turn == chess.WHITE and board.is_checkmate():
             _DEBUG = 'robo'
-            print(_DEBUG)
             
 
 # Iniciar a thread para aguardar movimentos
@@ -205,7 +212,6 @@ def update_board():
     Rota para atualizar o estado do tabuleiro.
     """
     global _DEBUG
-    print(_DEBUG)
 
     # Obter o mapa de peças
     piece_map = board.piece_map()
