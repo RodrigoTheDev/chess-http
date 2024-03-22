@@ -10,7 +10,7 @@ import moveValidation
 import random
 import json
 
-stockfish_path = "stockfish-windows-x86-64-avx2\stockfish\stockfish-windows-x86-64-avx2.exe"  # Substitua pelo caminho real
+stockfish_path = "stockfish\stockfish-windows-x86-64-avx2.exe"  # Substitua pelo caminho real
 board = chess.Board()
 engine = None
 move_event = threading.Event()
@@ -95,7 +95,6 @@ def aguardar_movimento():
             _DEBUG = 'robo'
             print(_DEBUG)
             
-            
 
 # Iniciar a thread para aguardar movimentos
 thread = threading.Thread(target=aguardar_movimento)
@@ -155,7 +154,7 @@ def jogar():
         dificuldade = session.get('dificuldade', None)
         configure_stockfish(dificuldade)
         
-    return render_template('jogar.html', xeque=xeque, _DEBUG=_DEBUG)
+    return render_template('jogar.html', xeque=xeque, _DEBUG=_DEBUG,)
 
 def boardToList(board):
     """
@@ -206,6 +205,7 @@ def update_board():
     Rota para atualizar o estado do tabuleiro.
     """
     global _DEBUG
+    print(_DEBUG)
 
     # Obter o mapa de peças
     piece_map = board.piece_map()
