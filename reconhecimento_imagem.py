@@ -118,34 +118,35 @@ def display_difference(matrix1, matrix2):
     
     if(len(moves) != 2):
         for mv in moves:
-            print(f"De: {mv[0]} Para: {mv[1]}")
+            return (f"{mv[0]}{mv[1]}")
     else:
-        print(f"De: {moves[0][0]} Para: {moves[1][1]}")
-        print(f"De: {moves[1][0]} Para: {moves[0][1]}")
+        return (f"{moves[0][0]}{moves[1][1]};{moves[1][0]}{moves[0][1]}")
 
-image_path = input("Digite o caminho da imagem do tabuleiro de xadrez: ")
+def compare_image():
+    image_path = input("Digite o caminho da imagem do tabuleiro de xadrez: ")
 
-chessboard_matrix = process_image(image_path)
+    chessboard_matrix = process_image(image_path)
 
-print("Matriz correspondente à primeira imagem:")
-print(chessboard_matrix)
-print()
-
-while True:
-    input("Pressione a tecla Enter para continuar com a próxima imagem...")
-    
-    next_image_path = input("Digite o caminho da próxima imagem do tabuleiro de xadrez (ou pressione Enter para sair): ")
-    
-    if not next_image_path:
-        break
-    
-    next_chessboard_matrix = process_image(next_image_path)
-
-    print("Matriz correspondente à próxima imagem:")
-    print(next_chessboard_matrix)
+    print("Matriz correspondente à primeira imagem:")
+    print(chessboard_matrix)
     print()
 
-    display_difference(chessboard_matrix, next_chessboard_matrix)
+    while True:
+        input("Pressione a tecla Enter para continuar com a próxima imagem...")
+        
+        next_image_path = input("Digite o caminho da próxima imagem do tabuleiro de xadrez (ou pressione Enter para sair): ")
+        
+        if not next_image_path:
+            break
+        
+        next_chessboard_matrix = process_image(next_image_path)
 
-    chessboard_matrix = next_chessboard_matrix
+        print("Matriz correspondente à próxima imagem:")
+        print(next_chessboard_matrix)
+        print()
 
+        move = display_difference(chessboard_matrix, next_chessboard_matrix)
+
+        chessboard_matrix = next_chessboard_matrix
+        
+        return move

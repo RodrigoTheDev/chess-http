@@ -7,6 +7,7 @@ import chess
 import chess.engine
 import threading
 import moveValidation
+import reconhecimento_imagem as rc
 import random
 import json
 
