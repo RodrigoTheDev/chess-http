@@ -1,4 +1,5 @@
 from chess import Piece
+import reconhecimento_imagem as ri
 from flask import Flask, render_template, session, request, redirect, url_for, jsonify
 from datetime import datetime, timedelta
 from flask_cors import CORS
@@ -11,7 +12,7 @@ import reconhecimento_imagem as rc
 import random
 import json
 
-stockfish_path = "stockfish-windows-x86-64-avx2\stockfish\stockfish-windows-x86-64-avx2.exe"  # Substitua pelo caminho real
+stockfish_path = "stockfishEngine\stockfish-windows-x86-64-avx2.exe"  # Substitua pelo caminho real
 board = chess.Board()
 engine = None
 move_event = threading.Event()
@@ -69,13 +70,15 @@ def receber_movimento():
     try:
         move_uci = data['movimento']
         if moveValidation.isMoveLegal(list(board.legal_moves), move_uci):
-            board.push_uci(move_uci)
+            # board.push_uci(move_uci)
+            board.push_uci(ri.compare_image())
             move_event.set()  # movimento recebido
             return jsonify({"mensagem": "Movimento aplicado com sucesso."})
         else:
             return jsonify({"erro": f"O movimento {move_uci} não é válido."})
     except KeyError:
         return jsonify({"erro": "Formato de requisição inválido."})
+    
 
 def aguardar_movimento():
     """

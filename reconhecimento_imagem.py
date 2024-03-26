@@ -146,7 +146,7 @@ def compare_image():
         print()
 
         move = display_difference(chessboard_matrix, next_chessboard_matrix)
-
         chessboard_matrix = next_chessboard_matrix
         
         return move
+    
