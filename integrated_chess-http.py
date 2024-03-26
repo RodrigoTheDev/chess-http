@@ -97,10 +97,10 @@ def aguardar_movimento():
             move_event.set()  # Movimento feito pelo robô
 
         if board.turn == chess.BLACK and board.is_checkmate():
-            _DEBUG = 'human'
+            _DEBUG = 'human'    # Checkmate feito pelo humano
             
         if board.turn == chess.WHITE and board.is_checkmate():
-            _DEBUG = 'robo'
+            _DEBUG = 'robo'     # Checkmate feito pelo robo
             
 
 # Iniciar a thread para aguardar movimentos
@@ -123,7 +123,6 @@ def restart_game():
     """
     global board
     board = chess.Board()
-    session['xeque'] = False
     
     return redirect(url_for('jogar'))
 
