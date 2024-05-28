@@ -3,8 +3,26 @@
 
 import chess
 import chess.engine
+import serial
 import moveValidation, sendserial as snd
-import reconhecimento_imagem as ri
+
+try:
+    ser = serial.Serial(
+        port='COM7',        # Replace with your serial port
+        baudrate=9600,      # Ensure this matches the receiving end
+        timeout=1           # Set a timeout for blocking operations
+    )
+except serial.SerialException as e:
+    print(f"Error opening serial port: {e}")
+    exit()
+
+# Function to send data
+def send_data(data):
+    try:
+        ser.write(data.encode())  # Encode and send the string
+        print(f"Sent: {data}")
+    except serial.SerialException as e:
+        print(f"Error writing to serial port: {e}")
 
 # Função que verifica o quadrado destino já possui uma peça (ajuda na comunicação do arduino)
 def hasPiece(board, target):
@@ -15,8 +33,6 @@ def hasPiece(board, target):
     piece = board.piece_at(square)
 
     return (piece != None)
-
-
 
 def play():
     stockfish_path = "./stockfishEngine/stockfish-windows-x86-64-avx2.exe"  # Substitua pelo caminho real
@@ -33,7 +49,6 @@ def play():
 
             if board.turn == chess.WHITE:
                 move_uci = input("Sua jogada (UCI): ")
-                # move_uci = ri.compare_image()
                 print("Sua jogada:")
                 print(move_uci)
             else:
@@ -45,12 +60,21 @@ def play():
                     send += "s"
 
                 print(f"Enviando para o serial: {send}")
-                snd.enviar(send)
+
+
+                send_data(send)
+                try:
+                    response = ser.readline().decode().strip()  # Read a line from the serial port
+                    print(f"Received: {response}")
+                except serial.SerialException as e:
+                    print(f"Error reading from serial port: {e}")
 
             # if move_uci in board.legal_moves:
             legal_moves = list(board.legal_moves)
             # print(board.legal_moves)
             # print(legal_moves)
+
+            # Optionally, read response
 
             if moveValidation.isMoveLegal(legal_moves,move_uci):
                 board.push_uci(move_uci)
